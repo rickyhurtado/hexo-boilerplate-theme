@@ -1,0 +1,1 @@
+# Hexo Boilerplate Theme

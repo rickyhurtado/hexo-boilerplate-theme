@@ -1,7 +1,10 @@
 {
-  "name": "hexo-site",
-  "version": "0.0.0",
-  "private": true,
+  "name": "hexo-boilerplate-theme",
+  "version": "0.1.0",
+  "description": "Hexo boilerplate theme for building static pages themed by Bulma UI framework.",
+  "repository": "git@github.com:rickyhurtado/hexo-boilerplate-theme.git",
+  "author": "Ricky Hurtado",
+  "license": "UNLICENSED",
   "hexo": {
     "version": "3.7.1"
   },
