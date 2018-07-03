@@ -1,0 +1,7 @@
+#!/bin/bash
+source $PWD/bin/bash.sh
+
+yarn install
+yarn global add gulp hexo
+gulp sass --silent
+gulp minify-css --silent

@@ -1,0 +1,12 @@
+#!/bin/bash
+source $PWD/bin/bash.sh
+
+echo 'Compiling scss files...'
+gulp sass --silent
+gulp minify-css --silent
+echo 'Done.'
+echo 'Building static files...'
+hexo generate --silent
+rm static/css/styles.css
+rm -rf static/archives
+echo 'Build completed.'

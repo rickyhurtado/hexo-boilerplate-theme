@@ -1,0 +1,36 @@
+#!/bin/bash
+source $PWD/bin/bash.sh
+
+yarn install
+yarn global add gulp hexo
+echo 'Cleaning up Hexo files...'
+hexo clean --silent
+echo 'Done.'
+echo 'Initialising Hexo files...'
+gulp sass --silent
+gulp minify-css --silent
+rm _config.yml
+rm package.json
+rm themes/boilerplate/layout/_components/main_navs.ejs
+rm themes/boilerplate/layout/_pages/home.ejs
+rm themes/boilerplate/layout/_pages/parent_page.ejs
+cp .init_files/_config.yml _config.yml
+cp .init_files/package.json package.json
+cp .init_files/main_navs.ejs themes/boilerplate/layout/_components/main_navs.ejs
+cp .init_files/home.ejs themes/boilerplate/layout/_pages/home.ejs
+rm -rf .git
+rm -rf source/parent-page/
+rm -rf themes/boilerplate/layout/_pages/parent_page/
+gulp sass --silent
+gulp minify-css --silent
+git init
+git add .
+git commit -m 'Init hexo boilerplate theme'
+echo 'Done.'
+echo ""
+echo '===================================================================='
+echo 'Update the `package.json` and `_config.yml` then commit your changes.'
+echo 'Add GIT repo origin and push your fresh Hexo boilerplate theme.'
+echo 'Visit https://hexo.io' for documentation.
+echo 'Visit https://bulma.io' for documentation.
+echo '===================================================================='

@@ -1,0 +1,7 @@
+title:
+description:
+author:
+theme: boilerplate
+source_dir: source
+public_dir: static
+permalink: /archives/:title/
