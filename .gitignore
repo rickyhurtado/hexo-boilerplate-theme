@@ -8,3 +8,5 @@ public/
 static/
 themes/boilerplate/source/css/styles.css
 themes/boilerplate/source/css/styles.min.css
+themes/boilerplate/source/js/app.js
+themes/boilerplate/source/js/app.min.js
