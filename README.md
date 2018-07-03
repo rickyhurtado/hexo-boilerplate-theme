@@ -6,14 +6,37 @@ for building static pages themed by
 
 ## Setup
 
-After cloning this repo, run the following commands:
+To install Hexo and other dependencies:
 
 ```
-yarn install
-yarn global add gulp hexo
+bin/install
 ```
 
-To run hexo server:
+To create project files:
+
+```
+bin/init
+```
+
+**NOTE:** When creating project files, the sample boilerplate files,
+`_config.yml`, and `package.json` files are removed. When the
+`theme/boilerplate` folder name is renamed,
+the `.gitignore`, `_config.yml`, and `gulpfile.js`
+should be updated. Replace _boilerplate_ with the name of the new theme.
+Lastly, add the remote origin for the project repository.
+Commit your changes then push your first Hexo theme project.
+
+## Static Files
+
+To generate static files:
+
+```
+bin/build
+```
+
+**NOTE:** Generated static files can be accessed in `static` folder.
+
+## Local Server
 
 ```
 hexo server -p 7777
@@ -72,12 +95,13 @@ title: Child Page Name | Parent Page Name
 **NOTE:** Following the notes for `parent-page-name`, the expected EJS file path for child
 page should be `themes/layout/_pages/parent_page_name/child_page_name/index.ejs`.
 
-## Static Files
+## Gulp Tasks
 
-To generate static files:
+To watch the changes in `.scss` and `.js` files:
 
 ```
-hexo generate
+gulp watch
 ```
 
-**NOTE:** Generated static files can be accessed in `static` folder.
+Check the [gulpfile.js](https://github.com/rickyhurtado/hexo-boilerplate-theme/blob/master/gulpfile.js)
+for other available gulp tasks.
