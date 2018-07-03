@@ -9,6 +9,7 @@ var sequence = require('gulp-sequence');
 
 var theme = 'themes/boilerplate';
 var cssPath = theme + '/source/css';
+var bulmaFiles = cssPath + '/_bulma/**/*.sass';
 var scssPath = cssPath + '/_scss';
 var scssFiles = scssPath + '/**/*.scss';
 var jsPath = theme + '/source/js';
@@ -42,10 +43,16 @@ gulp.task('translate-es6', () =>
     .pipe(gulp.dest(jsPath))
 );
 
-gulp.task('compile-sass', sequence('sass', 'minify-css'));
-gulp.task('transpile-js', sequence('concat-scripts', 'translate-es6'));
+gulp.task('compile-sass', function(callback) {
+  sequence('sass', 'minify-css')(callback)
+});
+
+gulp.task('transpile-js', function(callback) {
+  sequence('concat-scripts', 'translate-es6')(callback)
+});
 
 gulp.task('watch', function(){
+  gulp.watch(bulmaFiles, ['compile-sass']);
   gulp.watch(scssFiles, ['compile-sass']);
   gulp.watch(jsFiles, ['transpile-js']);
-})
+});

@@ -1,36 +1,92 @@
 #!/bin/bash
 source $PWD/bin/bash.sh
 
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo 'Installing node modules...'
 yarn install
 yarn global add gulp hexo
-echo 'Cleaning up Hexo files...'
-hexo clean --silent
-echo 'Done.'
-echo 'Initialising Hexo files...'
+echo ''
+
+if [ -d 'themes/boilerplate/static/' ]; then
+  echo 'Cleaning up Hexo files...'
+  hexo clean --silent
+  echo -e "${GREEN}success${NC} Cleaned Hexo files."
+  echo ''
+
+fi
+
+if [ -d 'themes/boilerplate/source/css/_bulma/' ]; then
+  echo -e "${RED}WARNING! The \"themes/boilerplate/source/css/_bulma/\" exists and will be removed.${NC}"
+  echo ''
+  echo 'Removing the directory...'
+  rm -rf themes/boilerplate/source/css/_bulma/
+  echo -e "${GREEN}success${NC} Removed directory."
+  echo ''
+fi
+
+echo 'Copying bulma files...'
+mkdir themes/boilerplate/source/css/_bulma/
+cp node_modules/bulma/bulma.sass themes/boilerplate/source/css/_bulma/bulma.sass
+cp -R node_modules/bulma/sass/ themes/boilerplate/source/css/_bulma/sass
+echo -e "${GREEN}success${NC} Copied bulma sass resources."
+echo ''
+
+echo 'Compiling scss files...'
 gulp compile-sass --silent
+echo -e "${GREEN}success${NC} Compiled to \"styles.css\""
+echo -e "${GREEN}success${NC} Minified to \"styles.min.css\""
+echo ''
+
+echo 'Transpiling js files...'
 gulp transpile-js --silent
+echo -e "${GREEN}success${NC} Transpiled to \"app.js\""
+echo -e "${GREEN}success${NC} Uglified to \"app.min.js\""
+echo ''
+
+echo 'Initializing project files...'
+rm bin/init
+rm bin/install
+rm -rf source/parent-page/
+rm themes/boilerplate/layout/_components/footer/main_footer.ejs
+rm themes/boilerplate/layout/_components/navbar/main_navs.ejs
+rm themes/boilerplate/layout/_pages/parent_page.ejs
+rm -rf themes/boilerplate/layout/_pages/parent_page/
+rm -rf .git
 rm _config.yml
 rm package.json
-rm themes/boilerplate/layout/_components/main_navs.ejs
-rm themes/boilerplate/layout/_pages/home.ejs
-rm themes/boilerplate/layout/_pages/parent_page.ejs
-cp .init_files/_config.yml _config.yml
-cp .init_files/package.json package.json
-cp .init_files/main_navs.ejs themes/boilerplate/layout/_components/main_navs.ejs
-cp .init_files/home.ejs themes/boilerplate/layout/_pages/home.ejs
-rm -rf .git
-rm -rf source/parent-page/
-rm -rf themes/boilerplate/layout/_pages/parent_page/
-gulp sass --silent
-gulp minify-css --silent
+rm README.md
+
+cp .init_project/install bin/install
+cp .init_project/_config.yml _config.yml
+cp .init_project/main_footer.ejs themes/boilerplate/layout/_components/footer/main_footer.ejs
+cp .init_project/main_navs.ejs themes/boilerplate/layout/_components/navbar/main_navs.ejs
+cp .init_project/package.json package.json
+cp .init_project/README.md README.md
+
+rm -rf .init_project/
+
 git init
 git add .
 git commit -m 'Init hexo boilerplate theme'
-echo 'Done.'
-echo ""
-echo '===================================================================='
-echo 'Update the `package.json` and `_config.yml` then commit your changes.'
-echo 'Add GIT repo origin and push your fresh Hexo boilerplate theme.'
-echo 'Visit https://hexo.io' for documentation.
-echo 'Visit https://bulma.io' for documentation.
-echo '===================================================================='
+echo -e "${GREEN}success${NC} Initialized project files."
+echo ''
+
+echo -e "${BLUE}=========================================================================${NC}"
+echo -e "${BLUE}Run server: hexo server -p 7777${NC}"
+echo ''
+echo -e "${BLUE}Update the \"package.json\" and \"_config.yml\" then commit your changes.${NC}"
+echo -e "${BLUE}Add GIT repo origin and push your fresh Hexo boilerplate theme.${NC}"
+echo ''
+echo -e "${BLUE}Visit https://hexo.io for documentation.${NC}"
+echo -e "${BLUE}Visit https://bulma.io for documentation.${NC}"
+echo ''
+echo -e "${BLUE}https://github.com/rickyhurtado/hexo-boilerplate-theme${NC}"
+echo -e "${BLUE}https://facebook.com/Ironcoder${NC}"
+echo -e "${BLUE}https://instagram.com/i.am.ironcoder${NC}"
+echo ''
+echo -e "${BLUE}JOHN 3:16 #TrainAndWitness #RaceAndWitness LUKE 9:23${NC}"
+echo -e "${BLUE}=========================================================================${NC}"

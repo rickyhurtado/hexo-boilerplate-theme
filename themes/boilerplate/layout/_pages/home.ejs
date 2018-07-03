@@ -1,2 +1,33 @@
-<h1>Home</h1>
-<%- partial('_components/main_navs') %>
+<%- partial('_components/navbar/main_navs', { activeNav: 'Home' }) %>
+
+<section class="hero has-text-centered">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Hexo Boilerplate</h1>
+      <h2 class="subtitle">
+        Powered by
+        <a
+          href="https://hexo.io"
+          title="Hexo is a fast, simple &amp; powerful blog framework powered by Node.js."
+          target="_blank"
+        >Hexo</a>
+        UI framework and themed by
+        <a
+          href="https://bulma.io/"
+          title="Bulma is an open source CSS framework based on Flexbox and built with Sass."
+          target="_blank">Bulma</a>
+        CSS framework.
+      </h2>
+      <p>
+        <a
+          href="https://github.com/rickyhurtado/hexo-boilerplate-theme"
+          title="Hexo boilerplate theme for building static pages themed by Bulma UI framework."
+          target="_blank"
+          class="button is-success"
+        >
+          <span>Github</span> <span class="icon"><i class="fab fa-lg fa-github-alt"></i></span>
+        </a>
+      </p>
+    </div>
+  </div>
+</section>

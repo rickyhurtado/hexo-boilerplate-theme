@@ -1,2 +1,9 @@
-<h1>Child Page</h1>
-<%- partial('_components/main_navs') %>
+<%- partial('_components/navbar/main_navs', { activeNav: 'Parent Page' }) %>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Child Page</h1>
+    <p><a href="/parent-page" class="button is-info">Back to Parent Page</a></p>
+  </div>
+</section>
+

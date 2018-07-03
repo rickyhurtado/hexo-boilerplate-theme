@@ -1,14 +1,25 @@
 #!/bin/bash
 source $PWD/bin/bash.sh
 
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
+
 echo 'Compiling scss files...'
 gulp compile-sass --silent
-echo 'Done.'
+echo -e "${GREEN}success${NC} Compiled to \"styles.css\""
+echo -e "${GREEN}success${NC} Minified to \"styles.min.css\""
+echo ''
+
 echo 'Transpiling js files...'
 gulp transpile-js --silent
-echo 'Done.'
+echo -e "${GREEN}success${NC} Transpiled to \"app.js\""
+echo -e "${GREEN}success${NC} Uglified to \"app.min.js\""
+echo ''
+
 echo 'Building static files...'
 hexo generate --silent
 rm static/css/styles.css
 rm -rf static/archives
-echo 'Build completed.'
+echo -e "${GREEN}success${NC} Build completed."

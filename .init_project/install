@@ -11,22 +11,6 @@ yarn install
 yarn global add gulp hexo
 echo ''
 
-if [ -d 'themes/boilerplate/source/css/_bulma/' ]; then
-  echo -e "${RED}WARNING! The \"themes/boilerplate/source/css/_bulma/\" exists and will be removed.${NC}"
-  echo ''
-  echo 'Removing the directory...'
-  rm -rf themes/boilerplate/source/css/_bulma/
-  echo -e "${GREEN}success${NC} Removed directory."
-  echo ''
-fi
-
-echo 'Copying bulma files...'
-mkdir themes/boilerplate/source/css/_bulma/
-cp node_modules/bulma/bulma.sass themes/boilerplate/source/css/_bulma/bulma.sass
-cp -R node_modules/bulma/sass/ themes/boilerplate/source/css/_bulma/sass
-echo -e "${GREEN}success${NC} Copied bulma sass resources."
-echo ''
-
 echo 'Compiling scss files...'
 gulp compile-sass --silent
 echo -e "${GREEN}success${NC} Compiled to \"styles.css\""
@@ -37,6 +21,13 @@ echo 'Transpiling js files...'
 gulp transpile-js --silent
 echo -e "${GREEN}success${NC} Transpiled to \"app.js\""
 echo -e "${GREEN}success${NC} Uglified to \"app.min.js\""
+echo ''
+
+echo 'Building static files...'
+hexo generate --silent
+rm static/css/styles.css
+rm -rf static/archives
+echo -e "${GREEN}success${NC} Build completed."
 echo ''
 
 echo -e "${BLUE}======================================================${NC}"

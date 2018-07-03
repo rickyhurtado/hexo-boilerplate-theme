@@ -1,0 +1,13 @@
+<nav class="navbar main-navbar is-light" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" title="<%= config.description %>" href="/"><%= config.title %></a>
+    <%- partial('burger_menu', { target: 'navbarMainMenu' }) %>
+  </div>
+
+  <div class="navbar-menu" id="navbarMainMenu">
+    <div class="navbar-start">
+      <%- partial('item', { title: 'Home', activeNav: activeNav, href: '/' }) %>
+      <%- partial('item', { title: 'Parent Page', activeNav: activeNav, href: '/parent-page' }) %>
+    </div>
+  </div>
+</nav>
