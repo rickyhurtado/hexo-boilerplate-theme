@@ -10,7 +10,7 @@ After cloning this repo, run the following commands:
 
 ```
 yarn install
-yarn global add hexo
+yarn global add gulp hexo
 ```
 
 To run hexo server:

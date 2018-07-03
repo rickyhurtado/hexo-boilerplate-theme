@@ -6,3 +6,5 @@ node_modules/
 public/
 .deploy*/
 static/
+themes/boilerplate/source/css/styles.css
+themes/boilerplate/source/css/styles.min.css
