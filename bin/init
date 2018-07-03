@@ -7,8 +7,8 @@ echo 'Cleaning up Hexo files...'
 hexo clean --silent
 echo 'Done.'
 echo 'Initialising Hexo files...'
-gulp sass --silent
-gulp minify-css --silent
+gulp compile-sass --silent
+gulp transpile-js --silent
 rm _config.yml
 rm package.json
 rm themes/boilerplate/layout/_components/main_navs.ejs

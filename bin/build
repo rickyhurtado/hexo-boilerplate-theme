@@ -2,8 +2,10 @@
 source $PWD/bin/bash.sh
 
 echo 'Compiling scss files...'
-gulp sass --silent
-gulp minify-css --silent
+gulp compile-sass --silent
+echo 'Done.'
+echo 'Transpiling js files...'
+gulp transpile-js --silent
 echo 'Done.'
 echo 'Building static files...'
 hexo generate --silent
