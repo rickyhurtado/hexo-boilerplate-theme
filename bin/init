@@ -6,6 +6,58 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+enterProjectTitle() {
+  read -p 'Project title (required): ' project
+
+  if [ -z "$project" ]; then
+    enterProjectTitle
+  else
+    echo "$project"
+  fi
+}
+
+themeName() {
+  local output="$*"
+
+  output=$(tr -s ' ' <<< $output)
+  output=$(tr -cd '[:alnum:][:space:]' <<< "${output}")
+  output="${output%"${output##*[![:space:]]}"}"
+  output=$(tr '[A-Z ]' '[a-z_]' <<< "${output}")
+
+  echo -n "$output"
+}
+
+sanitiseTheme() {
+  local output="$*"
+
+  output=$(tr '[_-]' '[  ]' <<< "${output}")
+  output=$(themeName "$output")
+
+  echo -n "$output"
+}
+
+project=$(enterProjectTitle)
+themeSuggest=$(themeName "$project")
+
+read -p 'Description: ' description
+read -p 'Author: ' author
+read -p "Theme directory [$themeSuggest]: " theme
+read -p "GIT remote origin (git@site.com:username/project-name.git): " repo
+
+if [ -z "$theme" ]; then
+  theme="$themeSuggest"
+else
+  theme=$(sanitiseTheme "$theme")
+fi
+
+if [ -z "$repo" ]; then
+  echo ''
+  echo -e "${BLUE}You decided to manually add the GIT remote origin.${NC}"
+  echo ''
+  echo -e "${BLUE}Immediately press CTRL+C to abort the initialization process and enter the GIT remote origin.${NC}"
+fi
+echo ''
+
 echo 'Installing node modules...'
 yarn install
 yarn global add gulp hexo
@@ -16,7 +68,6 @@ if [ -d 'themes/boilerplate/static/' ]; then
   hexo clean --silent
   echo -e "${GREEN}success${NC} Cleaned Hexo files."
   echo ''
-
 fi
 
 if [ -d 'themes/boilerplate/source/css/_bulma/' ]; then
@@ -48,38 +99,66 @@ echo -e "${GREEN}success${NC} Uglified to \"app.min.js\""
 echo ''
 
 echo 'Initializing project files...'
+echo ''
+
 rm bin/init
 rm bin/install
 rm -rf source/parent-page/
 rm themes/boilerplate/layout/_components/footer/main_footer.ejs
 rm themes/boilerplate/layout/_components/navbar/main_navs.ejs
+rm themes/boilerplate/layout/_pages/home.ejs
 rm themes/boilerplate/layout/_pages/parent_page.ejs
 rm -rf themes/boilerplate/layout/_pages/parent_page/
 rm -rf .git
-rm _config.yml
 rm package.json
 rm README.md
 
 cp .init_project/install bin/install
-cp .init_project/_config.yml _config.yml
+cp .init_project/home.ejs themes/boilerplate/layout/_pages/home.ejs
 cp .init_project/main_footer.ejs themes/boilerplate/layout/_components/footer/main_footer.ejs
 cp .init_project/main_navs.ejs themes/boilerplate/layout/_components/navbar/main_navs.ejs
 cp .init_project/package.json package.json
 cp .init_project/README.md README.md
 
+CONFIG_YML='_config.yml'
+GULPFILE_JS='gulpfile.js'
+PACKAGE_JSON='package.json'
+README='README.md'
+
+sed -i '' "s/boilerplate/$theme/g" "$GULPFILE_JS"
+mv 'themes/boilerplate' "themes/$theme"
+
+sed -i '' "s/boilerplate/$theme/g" .gitignore
+cat <<EOM >$CONFIG_YML
+title: $project
+description: $description
+author: $author
+theme: $theme
+source_dir: source
+public_dir: static
+permalink: /archives/:title/
+EOM
+
+sed -i '' "s/NAME/$project/g" "$PACKAGE_JSON"
+sed -i '' "s/DESCRIPTION/$description/g" "$PACKAGE_JSON"
+sed -i '' "s/REPO/$(sed 's/\//\\\//g' <<< "$repo")/g" "$PACKAGE_JSON"
+sed -i '' "s/AUTHOR/$author/g" "$PACKAGE_JSON"
+
+sed -i '' "s/THEME_NAME/$project/g" "$README"
+sed -i '' "s/DESCRIPTION/$description/g" "$README"
+sed -i '' "s/boilerplate/$theme/g" "$README"
+
 rm -rf .init_project/
 
 git init
+git remote add origin "$repo"
 git add .
-git commit -m 'Init hexo boilerplate theme'
+git commit -m "Init $project files"
 echo -e "${GREEN}success${NC} Initialized project files."
 echo ''
 
 echo -e "${BLUE}=========================================================================${NC}"
 echo -e "${BLUE}Run server: hexo server -p 7777${NC}"
-echo ''
-echo -e "${BLUE}Update the \"package.json\" and \"_config.yml\" then commit your changes.${NC}"
-echo -e "${BLUE}Add GIT repo origin and push your fresh Hexo boilerplate theme.${NC}"
 echo ''
 echo -e "${BLUE}Visit https://hexo.io for documentation.${NC}"
 echo -e "${BLUE}Visit https://bulma.io for documentation.${NC}"

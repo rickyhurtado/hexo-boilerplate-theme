@@ -12,19 +12,11 @@ To install Hexo and other dependencies:
 bin/install
 ```
 
-To create project files:
+To initialize new project:
 
 ```
 bin/init
 ```
-
-**NOTE:** When creating project files, the sample boilerplate files
-are removed. Then the `_config.yml` and `package.json` files must be updated.
-When the `theme/boilerplate` folder name is renamed,
-replace _boilerplate_ with the name of the new theme in
-`.gitignore`, `_config.yml`, and `gulpfile.js` files.
-Lastly, add the remote origin of the project repository.
-Commit your changes then push your first Hexo theme project.
 
 ## Static Files
 

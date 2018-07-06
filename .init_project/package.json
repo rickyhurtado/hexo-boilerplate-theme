@@ -1,9 +1,9 @@
 {
-  "name": "",
+  "name": "NAME",
   "version": "0.1.0",
-  "description": "",
-  "repository": "",
-  "author": "",
+  "description": "DESCRIPTION",
+  "repository": "REPO",
+  "author": "AUTHOR",
   "license": "UNLICENSED",
   "hexo": {
     "version": "3.7.1"

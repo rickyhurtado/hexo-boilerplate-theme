@@ -1,8 +1,6 @@
-# Hexo Boilerplate Theme
+# THEME_NAME
 
-[Hexo](https://hexo.io) boilerplate theme
-for building static pages themed by
-[Bulma](https://bulma.io) UI framework.
+DESCRIPTION
 
 ## Setup
 
